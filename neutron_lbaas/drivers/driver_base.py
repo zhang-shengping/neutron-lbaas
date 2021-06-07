@@ -171,6 +171,23 @@ class BaseL7RuleManager(driver_mixins.BaseManagerMixin):
     def db_delete_method(self):
         return self.driver.plugin.db.delete_l7policy_rule
 
+class BaseACLGroupManager(driver_mixins.BaseManagerMixin):
+    # model_class = models.ACLGroup
+    model_class = models.LoadBalancer
+
+    @property
+    def db_delete_method(self):
+        pass
+        # return self.driver.plugin.db.delete_l7policy
+
+class BaseACLBindManager(driver_mixins.BaseManagerMixin):
+    # model_class = models.ACLGroupListenerBinding
+    model_class = models.LoadBalancer
+
+    @property
+    def db_delete_method(self):
+        pass
+        # return self.driver.plugin.db.delete_l7policy
 
 # A decorator for wrapping driver operations, which will automatically
 # set the neutron object's status based on whether it sees an exception

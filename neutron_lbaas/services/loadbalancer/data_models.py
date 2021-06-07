@@ -35,7 +35,7 @@ from sqlalchemy.orm import collections
 from neutron_lbaas.db.loadbalancer import models
 from neutron_lbaas.services.loadbalancer import constants as l_const
 
-
+# pzhang
 class BaseDataModel(object):
 
     # NOTE(ihrachys): we could reuse the list to provide a default __init__
@@ -651,7 +651,8 @@ class Listener(BaseDataModel):
               'loadbalancer_id', 'protocol', 'default_tls_container_id',
               'sni_containers', 'protocol_port', 'connection_limit',
               'admin_state_up', 'provisioning_status', 'operating_status',
-              'default_pool', 'loadbalancer', 'l7_policies']
+              'default_pool', 'loadbalancer', 'l7_policies', 'insert_client_ip',
+              'transparent']
 
     def __init__(self, id=None, tenant_id=None, name=None, description=None,
                  default_pool_id=None, loadbalancer_id=None, protocol=None,
@@ -659,7 +660,7 @@ class Listener(BaseDataModel):
                  protocol_port=None, connection_limit=None,
                  admin_state_up=None, provisioning_status=None,
                  operating_status=None, default_pool=None, loadbalancer=None,
-                 l7_policies=None):
+                 l7_policies=None, insert_client_ip=None, transparent=None):
         self.id = id
         self.tenant_id = tenant_id
         self.name = name
@@ -677,6 +678,8 @@ class Listener(BaseDataModel):
         self.default_pool = default_pool
         self.loadbalancer = loadbalancer
         self.l7_policies = l7_policies or []
+        self.insert_client_ip = insert_client_ip
+        self.transparent = transparent
 
     def attached_to_loadbalancer(self):
         return bool(self.loadbalancer)
@@ -811,6 +814,7 @@ class LoadBalancer(BaseDataModel):
             api_listeners.append(api_listener)
         return api_listeners
 
+    # pzhang
     def to_api_dict(self, full_graph=False):
         ret_dict = super(LoadBalancer, self).to_dict(
             vip_port=False, stats=False, listeners=False)

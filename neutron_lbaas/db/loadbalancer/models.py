@@ -318,6 +318,8 @@ class Listener(model_base.BASEV2, model_base.HasId, model_base.HasProject):
     )
 
     name = sa.Column(sa.String(255))
+    insert_client_ip = sa.Column(sa.String(255))
+    transparent = sa.Column(sa.Boolean(), nullable=False)
     description = sa.Column(sa.String(255))
     default_pool_id = sa.Column(sa.String(36), sa.ForeignKey("lbaas_pools.id"),
                                 nullable=True)
